@@ -11,6 +11,7 @@ env:
   MANIFEST_NAME: manifest.yml
   IBM_CLOUD_API: ${{secrets.IBM_CLOUD_API_KEY}}
 
+
 defaults:
   run:
     working-directory: server
