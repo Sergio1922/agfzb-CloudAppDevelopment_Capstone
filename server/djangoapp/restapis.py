@@ -9,8 +9,8 @@ import time
  
 
 def analyze_review_sentiments(text):
-    url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/c8b0f019-31d6-41ac-b003-a2a31608839e"
-    api_key = "X2W_XG21E2BqmQ57cKeaX1rI9N43ZflG2KuaUmPJ_7wq"
+    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/a68a1805-8975-45d6-a50d-f253a26dd6ab"
+    api_key = "NSe7skFen6iHpwDYlPbIzGgLgPe8xPg94RLh2uRawvzG"
     authenticator = IAMAuthenticator(api_key)
     natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
     natural_language_understanding.set_service_url(url)
@@ -33,7 +33,7 @@ def get_dealers_from_cf(url, **kwargs):
 
     if json_result:
         # Get the row list in JSON as dealers
-        dealers = json_result["body"]["rows"]
+        dealers = json_result["body"]
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
@@ -42,7 +42,7 @@ def get_dealers_from_cf(url, **kwargs):
             # Create a CarDealer object with values in `doc` object
             dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"],
                                    id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
-                                
+                                    full_name=dealer_doc["full_name"], #short_name=dealer_doc["short_name"],
                                    st=dealer_doc["st"], zip=dealer_doc["zip"])
             results.append(dealer_obj)
 
@@ -59,7 +59,7 @@ def get_dealer_by_id_from_cf(url, id):
         #dealer_doc = dealers["docs"][0]
             dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"],
                                 id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
-                                full_name=dealer_doc["full_name"], short_name=dealer_doc["short_name"],
+                                full_name=dealer_doc["full_name"], #short_name=dealer_doc["short_name"],
                                 st=dealer_doc["st"], zip=dealer_doc["zip"])
     return dealer_obj
 
